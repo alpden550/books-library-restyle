@@ -23,7 +23,7 @@ def create_parser():
         "--end_page",
         type=int,
         help="Ending page for parsing, default is 2.",
-        choices=range(1, 702),
+        choices=range(1, 703),
         metavar="From 1 to 701",
     )
     return parser.parse_args()
@@ -39,5 +39,6 @@ def main(start_page, end_page):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     parser = create_parser()
+    start_page, end_page = parser.start_page, parser.end_page or 702
 
-    main(parser.start_page, parser.end_page)
+    main(start_page, end_page)
