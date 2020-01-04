@@ -1,4 +1,3 @@
-import re
 from urllib.parse import urljoin
 
 import requests
@@ -21,10 +20,10 @@ def get_books_from_category(page, category=CATEGORY_URL, genre=SCI_FI):
     return books
 
 
-def parse_category(start=1, end=10):
+def parse_category(start=1, end=702):
     books = []
 
-    for page in range(start, end+1):
+    for page in range(start, end):
         try:
             parsed_books = get_books_from_category(page=page)
         except requests.HTTPError:
@@ -35,10 +34,7 @@ def parse_category(start=1, end=10):
 
 
 def main():
-    books = parse_category(start=1, end=1)
-    for book in books:
-        # print(''.join([number for number in book if number.isdigit()]))
-        print()
+    pass
 
 
 if __name__ == "__main__":
