@@ -16,16 +16,16 @@ def create_parser():
         type=int,
         default=1,
         choices=range(1, 702),
-        metavar='From 1 to 701'
+        metavar="From 1 to 701",
     )
     parser.add_argument(
-        '-e',
-        '--end_page',
+        "-e",
+        "--end_page",
         type=int,
         default=1,
-        help='Ending page for parsing, default is 1.',
+        help="Ending page for parsing, default is 1.",
         choices=range(1, 702),
-        metavar='From 1 to 701'
+        metavar="From 1 to 701",
     )
     return parser.parse_args()
 
