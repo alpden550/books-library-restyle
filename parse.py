@@ -1,8 +1,7 @@
 import argparse
 import logging
-import re
-from parser.parse_tululu_book import download_library
-from parser.parse_tululu_category import get_books_from_category
+
+from parser.parse_tululu_category import parse_category, SCI_FI_LAST_PAGE
 
 
 def create_parser():
@@ -29,12 +28,9 @@ def create_parser():
 
 
 def main(start_page=None, end_page=None):
-    start = start_page or 1
-    end = end_page or 702
-    for page in range(start, end):
-        parsed_books = get_books_from_category(page=page)
-        books_idies = [re.search(r"\d+", book).group(0) for book in parsed_books]
-        download_library(books_idies)
+    start = parser.start_page or 1
+    end = parser.end_page or SCI_FI_LAST_PAGE+1
+    parse_category(start, end)
 
 
 if __name__ == "__main__":
@@ -44,5 +40,4 @@ if __name__ == "__main__":
         logging.warning(
             "Attention!! \n\nYou are downloading more than 17000 books.\n\nIt will take extremely many time..\n\n"
         )
-
     main(parser.start_page, parser.end_page)

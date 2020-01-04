@@ -1,4 +1,3 @@
-import json
 import logging
 from pathlib import Path
 from urllib.parse import urljoin
@@ -61,12 +60,12 @@ def get_book_info(book_id, url=BOOK_INFO_URL):
 
         return (title.strip(), author, image_url, comments, genres)
 
-    except requests.HTTPError as error:
+    except (requests.HTTPError, requests.ConnectionError) as error:
         logging.error(error)
-        return None
+        return (None, None, None, None, None)
 
 
-def download_library(book_idies, url=BOOK_DOWNLOAD_URL, output_json="sci-fi.json"):
+def download_library(book_idies, url=BOOK_DOWNLOAD_URL):
     books_description = []
 
     for book_id in book_idies:
@@ -89,16 +88,7 @@ def download_library(book_idies, url=BOOK_DOWNLOAD_URL, output_json="sci-fi.json
             )
         except (requests.HTTPError, AttributeError) as error:
             logging.error(error)
-
-    with open(output_json, "a") as file:
-        json.dump(
-            books_description,
-            file,
-            ensure_ascii=False,
-            sort_keys=True,
-            indent=4,
-            separators=(",", ": "),
-        )
+    return books_description
 
 
 if __name__ == "__main__":
