@@ -22,7 +22,6 @@ def create_parser():
         "-e",
         "--end_page",
         type=int,
-        default=2,
         help="Ending page for parsing, default is 2.",
         choices=range(1, 702),
         metavar="From 1 to 701",
