@@ -22,10 +22,10 @@ pip install -r requirements.txt
 
 ## How to use
 
-By default, the script downloads books from the first page of the sci-fi category.
+To download the first page, type:
 
 ```bash
-python parse.py
+python parse.py --end_page 2
 ```
 
 And your terminal outut:
@@ -45,10 +45,10 @@ To get help, type:
 python parse.py -h
 ```
 
-To limit parsed pages, enter start_page and end_page:
+To limit parsed pages by range from start to finish, enter start_page and end_page:
 
 ```bash
-python parse.py --start_page 700 -end_page 701
+python parse.py --start_page 700 --end_page 701
 ```
 
 Books from only page 700 will be downloaded.

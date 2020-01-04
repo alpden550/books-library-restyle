@@ -90,7 +90,7 @@ def download_library(book_idies, url=BOOK_DOWNLOAD_URL, output_json="sci-fi.json
         except (requests.HTTPError, AttributeError) as error:
             logging.error(error)
 
-    with open(output_json, "w") as file:
+    with open(output_json, "a") as file:
         json.dump(
             books_description,
             file,
