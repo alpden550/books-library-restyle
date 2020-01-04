@@ -22,13 +22,13 @@ pip install -r requirements.txt
 
 ## How to use
 
-To download the first page, type:
+To download all books from the first page, type:
 
 ```bash
 python parse.py --end_page 2
 ```
 
-And your terminal outut:
+And your terminal output:
 
 ```bash
 INFO Dowloaded book Алиби
