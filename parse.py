@@ -37,9 +37,9 @@ if __name__ == '__main__':
     parser = create_parser()
     if not any((parser.start_page, parser.end_page)):
         message = """
-        Attention!!,\n\n
-        You are downloading more than 17000 books.,\n\n
-        It will take extremely many time..\n\n
-        """
-        logging.warning(message)
+Attention!!,\n
+You are downloading more than 17000 books.,\n
+It will take extremely many time..\n
+"""
+    logging.warning(message)
     main(parser.start_page, parser.end_page)
