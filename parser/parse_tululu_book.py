@@ -72,24 +72,30 @@ def download_library(book_idies):
     books_description = []
 
     for book_id in book_idies:
+        title, author, image_url, comments, genres = get_book_info(book_id)
         try:
-            title, author, image_url, comments, genres = get_book_info(book_id)
             book_path = download_txt(book_id, title)
-            image_path = download_image(image_url)
-            logging.info('Dowloaded book %s', title)
-
-            books_description.append(
-                {
-                    'title': title,
-                    'author': author,
-                    'img_src': str(image_path),
-                    'book_path': str(book_path),
-                    'comments': comments,
-                    'genres': genres,
-                },
-            )
-        except (requests.HTTPError, requests.ConnectionError, AttributeError):
+        except (requests.HTTPError, requests.ConnectionError):
             logging.exception('Error')
+            continue
+        try:
+            image_path = download_image(image_url)
+        except (requests.HTTPError, requests.ConnectionError):
+            image_path = None
+            logging.exception('Error')
+
+        books_description.append(
+            {
+                'title': title,
+                'author': author,
+                'img_src': str(image_path),
+                'book_path': str(book_path),
+                'comments': comments,
+                'genres': genres,
+            },
+        )
+        if book_path:
+            logging.info('Dowloaded book %s', title)
     return books_description
 
 
