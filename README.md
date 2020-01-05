@@ -1,5 +1,7 @@
 # Parser online library
 
+[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
+
 Parser for an online library, it parses sci-fi fiction [section](http://tululu.org/l55/) and download books in txt format.
 
 Also, it downloads book covers and created JSON-file with the book descriptions.
