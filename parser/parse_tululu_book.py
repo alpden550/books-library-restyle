@@ -88,7 +88,7 @@ def download_library(book_idies):
                     'genres': genres,
                 },
             )
-        except (requests.HTTPError, AttributeError):
+        except (requests.HTTPError, requests.ConnectionError, AttributeError):
             logging.exception('Error')
     return books_description
 

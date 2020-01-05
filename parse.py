@@ -35,11 +35,11 @@ def main(start_page=None, end_page=None):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
     parser = create_parser()
-    if not any((parser.start_page, parser.end_page)):
-        message = """
+    message = """
 Attention!!,\n
 You are downloading more than 17000 books.,\n
 It will take extremely many time..\n
 """
-    logging.warning(message)
+    if not any((parser.start_page, parser.end_page)):
+        logging.warning(message)
     main(parser.start_page, parser.end_page)
