@@ -30,11 +30,15 @@ def parse_category(start, end, output_json='sci-fi.json'):
     for page in range(start, end):
         try:
             parsed_books = get_books_from_category(page=page)
-            books_idies = [re.search(r'\d+', book).group(0) for book in parsed_books]
-            books_data = download_library(books_idies)
-            books.extend(books_data)
         except requests.HTTPError:
+            parsed_books = []
             logging.exception('Catch error.')
+
+        if not parsed_books:
+            return
+        books_idies = [re.search(r'\d+', book).group(0) for book in parsed_books]
+        books_data = download_library(books_idies)
+        books.extend(books_data)
 
     with open(output_json, 'w') as json_file:
         json.dump(
