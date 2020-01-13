@@ -7,7 +7,6 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = 'http://tululu.org/'
 CATEGORY_URL = 'http://tululu.org/l{genre}/{page}'
 SCI_FI_CATEGORY = 55
 SCI_FI_LAST_PAGE = 701
@@ -21,7 +20,7 @@ def get_books_from_category(page, category=CATEGORY_URL, genre=SCI_FI_CATEGORY):
     soup = BeautifulSoup(response.text, 'lxml')
     raw_books = soup.select('.bookimage a[href]')
 
-    return [urljoin(BASE_URL, book['href']) for book in raw_books]
+    return [urljoin(CATEGORY_URL, book['href']) for book in raw_books]
 
 
 def parse_category(start, end, output_json='sci-fi.json'):

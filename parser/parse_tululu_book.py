@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 from pathvalidate import sanitize_filepath
 
-BASE_URL = 'http://tululu.org/'
 BOOK_DOWNLOAD_URL = 'http://tululu.org/txt.php?id={book_id}'
 BOOK_INFO_URL = 'http://tululu.org/b{book_id}/'
 
@@ -48,7 +47,7 @@ def parse_book_text(text):
     soup = BeautifulSoup(text, 'lxml')
     title, author = soup.select_one('h1').text.split('::')
     image = soup.select_one('.bookimage img')['src']
-    image_url = urljoin(BASE_URL, image)
+    image_url = urljoin(BOOK_INFO_URL, image)
     raw_comments = soup.select('.texts .black')
     comments = [comment.text for comment in raw_comments]
     raw_genres = soup.select('span.d_book a')
