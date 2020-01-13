@@ -68,10 +68,10 @@ def get_book_info(book_id, url=BOOK_INFO_URL):
         logging.exception('Error')
 
 
-def download_library(book_idies):
+def download_library(book_ids):
     books_description = []
 
-    for book_id in book_idies:
+    for book_id in book_ids:
         title, author, image_url, comments, genres = get_book_info(book_id)
         try:
             book_path = download_txt(book_id, title)

@@ -38,7 +38,7 @@ if __name__ == '__main__':
     message = """
 Attention!!,\n
 You are downloading more than 17000 books.,\n
-It will take extremely many time..\n
+It will take extremely long time..\n
 """
     if not any((parser.start_page, parser.end_page)):
         logging.warning(message)
