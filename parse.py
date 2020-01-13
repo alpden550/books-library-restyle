@@ -27,12 +27,6 @@ def create_parser():
 
 
 def main(start_page=None, end_page=None):
-    start = parser.start_page or 1
-    end = parser.end_page or SCI_FI_LAST_PAGE + 1
-    parse_category(start, end)
-
-
-if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
     parser = create_parser()
     message = """
@@ -40,6 +34,12 @@ Attention!!,\n
 You are downloading more than 17000 books.,\n
 It will take extremely long time..\n
 """
+    start = parser.start_page or 1
+    end = parser.end_page or SCI_FI_LAST_PAGE + 1
     if not any((parser.start_page, parser.end_page)):
         logging.warning(message)
-    main(parser.start_page, parser.end_page)
+    parse_category(start, end)
+
+
+if __name__ == '__main__':
+    main()
