@@ -63,13 +63,17 @@ def get_book_info(book_id, url=BOOK_INFO_URL):
 
     try:
         return parse_book_text(response.text)
-
-    except (requests.HTTPError, requests.ConnectionError):
+    except (requests.HTTPError, AttributeError):
         logging.exception('Error')
+        return None
 
 
 def download_book(book_id):
-    title, author, image_url, comments, genres = get_book_info(book_id)
+    book_info = get_book_info(book_id)
+    if not book_info:
+        return None
+    title, author, image_url, comments, genres = book_info
+
     try:
         book_path = download_txt(book_id, title)
     except (requests.HTTPError, requests.ConnectionError):
@@ -77,7 +81,7 @@ def download_book(book_id):
         book_path = None
     try:
         image_path = download_image(image_url)
-    except (requests.HTTPError, requests.ConnectionError):
+    except requests.HTTPError:
         image_path = None
         logging.exception('Error')
 
@@ -96,4 +100,4 @@ def download_book(book_id):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
-    download_book([1, 2, 3, 4])
+    download_book(book_id=239)  # noqa:WPS432
