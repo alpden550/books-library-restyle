@@ -1,6 +1,6 @@
 # Parser for an online library
 
-[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1cdba607bb5fa596ad0c/maintainability)](https://codeclimate.com/github/alpden550/books-library-restyle/maintainability) [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
 Parser for an online library, it parses sci-fi fiction [section](http://tululu.org/l55/) and download books in txt format.
 
