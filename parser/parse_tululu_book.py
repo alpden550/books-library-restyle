@@ -68,37 +68,32 @@ def get_book_info(book_id, url=BOOK_INFO_URL):
         logging.exception('Error')
 
 
-def download_library(book_ids):
-    books_description = []
+def download_book(book_id):
+    title, author, image_url, comments, genres = get_book_info(book_id)
+    try:
+        book_path = download_txt(book_id, title)
+    except (requests.HTTPError, requests.ConnectionError):
+        logging.exception('Error')
+        book_path = None
+    try:
+        image_path = download_image(image_url)
+    except (requests.HTTPError, requests.ConnectionError):
+        image_path = None
+        logging.exception('Error')
 
-    for book_id in book_ids:
-        title, author, image_url, comments, genres = get_book_info(book_id)
-        try:
-            book_path = download_txt(book_id, title)
-        except (requests.HTTPError, requests.ConnectionError):
-            logging.exception('Error')
-            continue
-        try:
-            image_path = download_image(image_url)
-        except (requests.HTTPError, requests.ConnectionError):
-            image_path = None
-            logging.exception('Error')
+    if book_path:
+        logging.info('Dowloaded book %s', title)
 
-        books_description.append(
-            {
-                'title': title,
-                'author': author,
-                'img_src': str(image_path),
-                'book_path': str(book_path),
-                'comments': comments,
-                'genres': genres,
-            },
-        )
-        if book_path:
-            logging.info('Dowloaded book %s', title)
-    return books_description
+    return {
+        'title': title,
+        'author': author,
+        'img_src': str(image_path),
+        'book_path': str(book_path),
+        'comments': comments,
+        'genres': genres,
+    }
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
-    download_library([1, 2, 3, 4])
+    download_book([1, 2, 3, 4])

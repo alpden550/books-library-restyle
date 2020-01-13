@@ -1,7 +1,7 @@
 import json
 import logging
 import re
-from parser.parse_tululu_book import download_library
+from parser.parse_tululu_book import download_book
 from urllib.parse import urljoin
 
 import requests
@@ -37,7 +37,7 @@ def parse_category(start, end, output_json='sci-fi.json'):
         if not parsed_books:
             return
         books_ids = [re.search(r'\d+', book).group(0) for book in parsed_books]
-        books_data = download_library(books_ids)
+        books_data = [download_book(book_id) for book_id in books_ids]
         books.extend(books_data)
 
     with open(output_json, 'w') as json_file:
