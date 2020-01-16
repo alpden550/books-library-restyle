@@ -60,32 +60,30 @@ def get_book_info(book_id, url=BOOK_INFO_URL):
     response = requests.get(book_url, allow_redirects=False)
     response.raise_for_status()
 
-    try:
-        return parse_book_text(response.text)
-    except (requests.HTTPError, AttributeError):
-        logging.exception('Error')
-        return None
+    return parse_book_text(response.text)
 
 
 def download_book(book_id):
-    book_info = get_book_info(book_id)
-    if not book_info:
+    try:
+        book_info = get_book_info(book_id)
+    except (AttributeError, ValueError):
+        logging.exception('Catch parser error.')
         return None
+
     title, author, image_url, comments, genres = book_info
 
     try:
         book_path = download_txt(book_id, title)
     except (requests.HTTPError, requests.ConnectionError):
-        logging.exception('Error')
+        logging.exception('Catch HTTP or Connection Error')
         book_path = None
     try:
         image_path = download_image(image_url)
     except requests.HTTPError:
         image_path = None
-        logging.exception('Error')
+        logging.exception('Catch HTTP error')
 
-    if book_path:
-        logging.info('Dowloaded book %s', title)
+    logging.info('Dowloaded book %s', title)
 
     return {
         'title': title,
@@ -99,4 +97,4 @@ def download_book(book_id):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
-    download_book(book_id=239)  # noqa:WPS432
+    download_book(book_id=123)  # noqa:WPS432
