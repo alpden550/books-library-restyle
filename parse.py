@@ -5,7 +5,6 @@ from textwrap import dedent
 import click
 
 
-# TODO: Add check typing and mypy
 @click.command()
 @click.option(
     '-s',
@@ -19,7 +18,7 @@ import click
     type=click.IntRange(1, SCI_FI_LAST_PAGE + 1),
     help='End page, from 2 to 702.',
 )
-def main(start, end):
+def main(start: int, end: int) -> None:
     """
     Parse sci-fi book library and dowload books in txt format.
 

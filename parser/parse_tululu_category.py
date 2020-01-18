@@ -2,6 +2,7 @@ import json
 import logging
 import re
 from parser.parse_tululu_book import download_book
+from typing import Any
 from urllib.parse import urljoin
 
 import requests
@@ -24,7 +25,8 @@ def get_books_from_category(page, category=CATEGORY_URL, genre=SCI_FI_CATEGORY):
     return [urljoin(CATEGORY_URL, book['href']) for book in raw_books]
 
 
-def parse_category(start, end, output_json='sci-fi.json'):
+# FIXME: Add normal types
+def parse_category(start, end, output_json='sci-fi.json') -> Any:
     books = []
 
     for page in range(start, end):
