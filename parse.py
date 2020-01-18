@@ -1,47 +1,42 @@
-import argparse
 import logging
 from parser.parse_tululu_category import SCI_FI_LAST_PAGE, parse_category
 from textwrap import dedent
 
+import click
+
 
 # TODO: Add check typing and mypy
-# TODO: Change argparse on click
-def create_parser():
-    parser = argparse.ArgumentParser(
-        description='Parse sci-fi book library and dowload books in txt format.',
-    )
-    parser.add_argument(
-        '-s',
-        '--start_page',
-        help='Starting page for parsing, default is 1.',
-        type=int,
-        choices=range(1, SCI_FI_LAST_PAGE + 1),
-        metavar='From 1 to 701',
-    )
-    parser.add_argument(
-        '-e',
-        '--end_page',
-        type=int,
-        help='Ending page for parsing, default is 2.',
-        choices=range(1, SCI_FI_LAST_PAGE + 2),
-        metavar='From 1 to 702',
-    )
-    return parser.parse_args()
+@click.command()
+@click.option(
+    '-s',
+    '--start',
+    type=click.IntRange(1, SCI_FI_LAST_PAGE),
+    help='Start page, from 1 to 701.',
+)
+@click.option(
+    '-e',
+    '--end',
+    type=click.IntRange(1, SCI_FI_LAST_PAGE + 1),
+    help='End page, from 2 to 702.',
+)
+def main(start, end):
+    """
+    Parse sci-fi book library and dowload books in txt format.
 
-
-def main(start_page=None, end_page=None):
+    Use start page for first page, end page number + 1 for last page.
+    """
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
-    parser = create_parser()
     message = """
         Attention!!,\n
         You are downloading more than 17000 books.,\n
         It will take extremely long time..\n
     """
-    start = parser.start_page or 1
-    end = parser.end_page or SCI_FI_LAST_PAGE + 1
-    if not any((parser.start_page, parser.end_page)):
+
+    if not any((start, end)):
         logging.warning(dedent(message))
-    parse_category(start, end)
+    start_page = start or 1
+    end_page = end or SCI_FI_LAST_PAGE + 1
+    parse_category(start_page, end_page)
 
 
 if __name__ == '__main__':

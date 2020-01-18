@@ -27,7 +27,7 @@ pip install -r requirements.txt
 To download all books from the first page, type:
 
 ```bash
-python parse.py --end_page 2
+python parse.py --end 2
 ```
 
 And your terminal output:
@@ -44,13 +44,13 @@ INFO Dowloaded book Дело Джен, или Эйра немилосердия
 To get help, type:
 
 ```bash
-python parse.py -h
+python parse.py --help
 ```
 
 To limit parsed pages by range from start to finish, enter start_page and end_page:
 
 ```bash
-python parse.py --start_page 700 --end_page 701
+python parse.py --start 700 --end 701
 ```
 
 Books from only page 700 will be downloaded.
