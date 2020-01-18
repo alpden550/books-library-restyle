@@ -10,6 +10,7 @@ BOOK_DOWNLOAD_URL = 'http://tululu.org/txt.php?id={book_id}'
 BOOK_INFO_URL = 'http://tululu.org/b{book_id}/'
 
 
+# TODO: Add check typing and mypy
 def create_pure_filepath(directory, filename):
     Path(directory).mkdir(exist_ok=True)
     filepath = Path(directory).joinpath(filename)

@@ -12,6 +12,7 @@ SCI_FI_CATEGORY = 55
 SCI_FI_LAST_PAGE = 701
 
 
+# TODO: Add check typing and mypy
 def get_books_from_category(page, category=CATEGORY_URL, genre=SCI_FI_CATEGORY):
     url = category.format(genre=genre, page=page)
     response = requests.get(url, allow_redirects=False)

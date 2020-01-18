@@ -13,6 +13,7 @@ requests = "^2.22.0"
 BeautifulSoup4 = "^4.8.2"
 lxml = "^4.4.2"
 pathvalidate = "^1.0.0"
+click = "^7.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"

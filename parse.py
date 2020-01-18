@@ -4,6 +4,8 @@ from parser.parse_tululu_category import SCI_FI_LAST_PAGE, parse_category
 from textwrap import dedent
 
 
+# TODO: Add check typing and mypy
+# TODO: Change argparse on click
 def create_parser():
     parser = argparse.ArgumentParser(
         description='Parse sci-fi book library and dowload books in txt format.',
