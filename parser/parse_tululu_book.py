@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import urljoin
 
 import requests
@@ -9,22 +10,29 @@ from pathvalidate import sanitize_filepath
 BOOK_DOWNLOAD_URL = 'http://tululu.org/txt.php?id={book_id}'
 BOOK_INFO_URL = 'http://tululu.org/b{book_id}/'
 
+BookInfo = Tuple[str, str, str, List[str], List[str]]
+UStr = Union[str, List[str]]
+BookDict = Optional[Dict[str, Optional[UStr]]]
 
-# TODO: Add check typing and mypy
-def create_pure_filepath(directory, filename):
+
+def create_pure_filepath(directory: str, filename: str) -> Path:
     Path(directory).mkdir(exist_ok=True)
     filepath = Path(directory).joinpath(filename)
     return sanitize_filepath(filepath)
 
 
-def download_txt(book_id, book_path, book_directory='books', url=BOOK_DOWNLOAD_URL):
+def download_txt(
+    book_id: int,
+    book_title: str,
+    book_directory: str = 'books',
+    url: str = BOOK_DOWNLOAD_URL,
+) -> Optional[str]:
     book_url = url.format(book_id=book_id)
     response = requests.get(book_url, allow_redirects=False)
     response.raise_for_status()
 
-    filepath = create_pure_filepath(book_directory, book_path)
+    filepath = create_pure_filepath(book_directory, book_title)
     book_path = '{filepath}.txt'.format(filepath=filepath)
-
     if not response.text:
         return None
 
@@ -32,19 +40,18 @@ def download_txt(book_id, book_path, book_directory='books', url=BOOK_DOWNLOAD_U
     return book_path
 
 
-def download_image(image_url, image_directory='images'):
+def download_image(image_url: str, image_directory: str = 'images') -> Optional[str]:
     image_name = image_url.split('/')[-1]
 
     response = requests.get(image_url)
     response.raise_for_status()
 
     image_path = create_pure_filepath(image_directory, image_name)
+    image_path.write_bytes(response.content)
+    return str(image_path)
 
-    Path(image_path).write_bytes(response.content)
-    return image_path
 
-
-def parse_book_text(text):
+def parse_book_text(text: str) -> BookInfo:
     soup = BeautifulSoup(text, 'lxml')
     title, author = soup.select_one('h1').text.split('::')
     image = soup.select_one('.bookimage img')['src']
@@ -56,7 +63,7 @@ def parse_book_text(text):
     return (title.strip(), author, image_url, comments, genres)
 
 
-def get_book_info(book_id, url=BOOK_INFO_URL):
+def get_book_info(book_id: int, url: str = BOOK_INFO_URL) -> BookInfo:
     book_url = url.format(book_id=book_id)
     response = requests.get(book_url, allow_redirects=False)
     response.raise_for_status()
@@ -64,7 +71,7 @@ def get_book_info(book_id, url=BOOK_INFO_URL):
     return parse_book_text(response.text)
 
 
-def download_book(book_id):
+def download_book(book_id: int) -> BookDict:
     try:
         book_info = get_book_info(book_id)
     except (AttributeError, ValueError):
@@ -89,8 +96,8 @@ def download_book(book_id):
     return {
         'title': title,
         'author': author,
-        'img_src': str(image_path),
-        'book_path': str(book_path),
+        'img_src': image_path,
+        'book_path': book_path,
         'comments': comments,
         'genres': genres,
     }
