@@ -2,7 +2,7 @@ import json
 import logging
 import re
 from parser.parse_tululu_book import download_book
-from typing import Any
+from typing import List
 from urllib.parse import urljoin
 
 import requests
@@ -13,8 +13,11 @@ SCI_FI_CATEGORY = 55
 SCI_FI_LAST_PAGE = 701
 
 
-# TODO: Add check typing and mypy
-def get_books_from_category(page, category=CATEGORY_URL, genre=SCI_FI_CATEGORY):
+def get_books_from_category(
+    page: int,
+    category: str = CATEGORY_URL,
+    genre: int = SCI_FI_CATEGORY,
+) -> List[str]:
     url = category.format(genre=genre, page=page)
     response = requests.get(url, allow_redirects=False)
     response.raise_for_status()
@@ -25,8 +28,11 @@ def get_books_from_category(page, category=CATEGORY_URL, genre=SCI_FI_CATEGORY):
     return [urljoin(CATEGORY_URL, book['href']) for book in raw_books]
 
 
-# FIXME: Add normal types
-def parse_category(start, end, output_json='sci-fi.json') -> Any:
+def get_book_id(book_text: str) -> int:
+    return int(re.search(r'\d+', book_text).group(0))
+
+
+def parse_category(start: int, end: int, output_json: str = 'sci-fi.json') -> None:
     books = []
 
     for page in range(start, end):
@@ -38,7 +44,7 @@ def parse_category(start, end, output_json='sci-fi.json') -> Any:
 
         if not parsed_books:
             return
-        books_ids = [re.search(r'\d+', book).group(0) for book in parsed_books]
+        books_ids: List[int] = [get_book_id(book) for book in parsed_books]
         books_data = [download_book(book_id) for book_id in books_ids]
         books.extend(books_data)
 
