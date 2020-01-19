@@ -2,7 +2,7 @@ import json
 import logging
 import re
 from parser.parse_tululu_book import download_book
-from typing import List
+from typing import List, Optional
 from urllib.parse import urljoin
 
 import requests
@@ -28,8 +28,9 @@ def get_books_from_category(
     return [urljoin(CATEGORY_URL, book['href']) for book in raw_books]
 
 
-def get_book_id(book_text: str) -> int:
-    return int(re.search(r'\d+', book_text).group(0))
+def get_book_id(book_text: str) -> Optional[str]:
+    match = re.search(r'\d+', book_text)
+    return match.group(0) if match else None
 
 
 def parse_category(start: int, end: int, output_json: str = 'sci-fi.json') -> None:
@@ -44,7 +45,7 @@ def parse_category(start: int, end: int, output_json: str = 'sci-fi.json') -> No
 
         if not parsed_books:
             return
-        books_ids: List[int] = [get_book_id(book) for book in parsed_books]
+        books_ids: List[Optional[str]] = [get_book_id(book) for book in parsed_books]
         books_data = [download_book(book_id) for book_id in books_ids]
         books.extend(books_data)
 

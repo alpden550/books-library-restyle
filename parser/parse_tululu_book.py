@@ -22,7 +22,7 @@ def create_pure_filepath(directory: str, filename: str) -> Path:
 
 
 def download_txt(
-    book_id: int,
+    book_id: Union[str, int, None],
     book_title: str,
     book_directory: str = 'books',
     url: str = BOOK_DOWNLOAD_URL,
@@ -63,7 +63,7 @@ def parse_book_text(text: str) -> BookInfo:
     return (title.strip(), author, image_url, comments, genres)
 
 
-def get_book_info(book_id: int, url: str = BOOK_INFO_URL) -> BookInfo:
+def get_book_info(book_id: Union[str, int, None], url: str = BOOK_INFO_URL) -> BookInfo:
     book_url = url.format(book_id=book_id)
     response = requests.get(book_url, allow_redirects=False)
     response.raise_for_status()
@@ -71,7 +71,7 @@ def get_book_info(book_id: int, url: str = BOOK_INFO_URL) -> BookInfo:
     return parse_book_text(response.text)
 
 
-def download_book(book_id: int) -> BookDict:
+def download_book(book_id: Union[str, int, None]) -> BookDict:
     try:
         book_info = get_book_info(book_id)
     except (AttributeError, ValueError):
