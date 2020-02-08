@@ -125,7 +125,5 @@ dmypy.json
 .pyre/
 
 .vscode/
-books/
-images
 sci-fi.json
 .DS_Store
