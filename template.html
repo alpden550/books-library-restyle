@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../resources/bootstrap.min.css">
+
+    <title>SCI-FI Library</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg justify-content-center mt-4">
+
+                {% if current_page == 1 %}
+                    <li class="page-item disabled">
+                        <a class="page-link">Предыдущая</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="index{{ current_page-1 }}.html">Предыдущая</a>
+                    </li>
+                {% endif %}
+
+                {% for index in range(1, page_numbers + 1) %}
+                    {% if current_page == loop.index %}
+                        {% set active = 'active' %}
+                    {% endif %}
+                    <li class="page-item {{ active }}">
+                        <a class="page-link" href="index{{ loop.index }}.html">{{ loop.index }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if current_page == page_numbers %}
+                    <li class="page-item {{ disabled }}">
+                        <a class="page-link">Следующая</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="index{{ current_page+1 }}.html">Следующая</a>
+                    </li>
+                {% endif %}
+                
+            </ul>
+        </nav>
+
+        <div class="row">
+            {% for book in books %}
+                <div class="col-6">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <a href="../{{ book.book_path }}" target="_blank">
+                                    <img src="../{{ book.img_src }}" class="card-img" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <h5 class="card-title">{{ book.title }}</h5>
+                                    <h5 class="card-title">{{ book.author|trim }}</h5>
+                                    <p class="card-text">
+                                        {% for genre in book.genres %}
+                                        <span class="badge badge-light mr-1">{{ genre }}</span>
+                                        {% endfor %}
+                                    </p>
+                                    <div class="mt-auto">
+                                        <a href="../{{ book.book_path }}" target="_blank" class="btn btn-primary">Читать</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../resources/jquery-3.3.1.slim.min.js"></script>
+    <script src="../resources/popper.min.js">
+    </script>
+    <script src="../resources/bootstrap.min.js">
+    </script>
+</body>
+
+</html>
