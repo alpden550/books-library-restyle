@@ -6,6 +6,8 @@ Parser for an online library, it parses sci-fi fiction [section](http://tululu.o
 
 Also, it downloads book covers and created JSON-file with the book descriptions.
 
+Sci-Fi books library rendered example: [https://alpden550.github.io/books-library-restyle/pages/index1.html](https://alpden550.github.io/books-library-restyle/pages/index1.html)
+
 ## How to install
 
 At least Python 3.6 must be already installed.
@@ -54,3 +56,9 @@ python parse.py --start 700 --end 701
 ```
 
 Books from only page 700 will be downloaded.
+
+And, to create html pages for downloded books, run:
+
+```bash
+python render-website.py
+```
