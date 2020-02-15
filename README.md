@@ -1,10 +1,10 @@
 # Parser for an online library
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/1cdba607bb5fa596ad0c/maintainability)](https://codeclimate.com/github/alpden550/books-library-restyle/maintainability) [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide) [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1cdba607bb5fa596ad0c/maintainability)](https://codeclimate.com/github/alpden550/books-library-restyle/maintainability) [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
 Parser for an online library, it parses sci-fi fiction [section](http://tululu.org/l55/) and download books in txt format.
 
-Also, it downloads book covers and created JSON-file with the book descriptions.
+Also, it downloads book covers, creates JSON-file with the book descriptions, and renders simple html pages.
 
 Sci-Fi books library rendered example: [https://alpden550.github.io/books-library-restyle/pages/index1.html](https://alpden550.github.io/books-library-restyle/pages/index1.html)
 
