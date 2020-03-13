@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from more_itertools import chunked
 
 env = Environment(
     loader=FileSystemLoader('.'),
@@ -11,17 +12,10 @@ env = Environment(
 template = env.get_template('template.html')
 
 
-def get_books_chunks(books, size=10):
-    chunks = []
-    for index in range(0, len(books), size):  # noqa:WPS518
-        chunks.append(books[index: index + size])
-    return chunks
-
-
 def main(pdges_dir='pages'):
     Path(pdges_dir).mkdir(exist_ok=True)
     books_data = json.loads(Path('sci-fi.json').read_text())
-    chunked_books = get_books_chunks(books_data)
+    chunked_books = list(chunked(books_data, 10))
     for chunk_number, books in enumerate(chunked_books, start=1):
         rendered_page = template.render(
             books=books,
