@@ -15,8 +15,8 @@ env.globals['BOOKS_URL'] = '../'
 template = env.get_template('template.html')
 
 
-def main(pdges_dir='pages'):
-    Path(pdges_dir).mkdir(exist_ok=True)
+def main(pages_dir='pages'):
+    Path(pages_dir).mkdir(exist_ok=True)
     books_data = json.loads(Path('sci-fi.json').read_text())
     chunked_books = list(chunked(books_data, 10))
     for chunk_number, books in enumerate(chunked_books, start=1):
