@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../resources/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
 
     <title>SCI-FI Library</title>
 </head>
@@ -57,8 +57,8 @@
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <a href="../{{ book.book_path }}" target="_blank">
-                                    <img src="../{{ book.img_src }}" class="card-img" alt="">
+                                <a href="{{ BOOKS_URL }}{{ book.book_path }}" target="_blank">
+                                    <img src="{{ IMAGES_URL }}{{ book.img_src }}" class="card-img" alt="">
                                 </a>
                             </div>
                             <div class="col-md-8">
@@ -85,10 +85,10 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../resources/jquery-3.3.1.slim.min.js"></script>
-    <script src="../resources/popper.min.js">
+    <script src="{{ STATIC_URL }}js/jquery-3.3.1.slim.min.js"></script>
+    <script src="{{ STATIC_URL }}js/popper.min.js">
     </script>
-    <script src="../resources/bootstrap.min.js">
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js">
     </script>
 </body>
 

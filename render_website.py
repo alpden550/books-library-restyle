@@ -9,6 +9,9 @@ env = Environment(
     autoescape=select_autoescape(['html', 'xml']),
 )
 
+env.globals['STATIC_URL'] = '../resources/'
+env.globals['IMAGES_URL'] = '../'
+env.globals['BOOKS_URL'] = '../'
 template = env.get_template('template.html')
 
 
